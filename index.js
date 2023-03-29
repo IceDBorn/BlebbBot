@@ -66,30 +66,30 @@ function onMessageHandler(target, tags, message, self){
 
     // Respond to commands
     switch (message.trim()) {
-    case '!commands':
-        client.say(TARGET_CHANNEL, `@${tags.username} !twitter !discord !yt !vods !rules !runs !bot`);
-        break;
-    case '!discord':
-        client.say(TARGET_CHANNEL, `@${tags.username} https://discord.gg/RA5GuG2k6A`);
-        break;
-    case '!rules':
-        client.say(TARGET_CHANNEL, `@${tags.username} https://pastebin.com/pivfNuNa`);
-        break;
-    case '!runs':
-        client.say(TARGET_CHANNEL, `@${tags.username} https://pastebin.com/u/nebblebb`);
-        break;
-    case '!twitter':
-        client.say(TARGET_CHANNEL, `@${tags.username} https://twitter.com/nebblebb`);
-        break;
-    case '!vods':
-        client.say(TARGET_CHANNEL, `@${tags.username} https://www.youtube.com/@nebblebbvods`);
-        break;
-    case '!yt':
-        client.say(TARGET_CHANNEL, `@${tags.username} https://www.youtube.com/@nebblebb1`);
-        break;
-    case '!bot':
-        client.say(TARGET_CHANNEL, `@${tags.username} https://github.com/IceDBorn/BlebbBot`);
-        break;
+        case '!commands':
+            client.say(TARGET_CHANNEL, `@${tags.username} !twitter !discord !yt !vods !rules !runs !bot`);
+            break;
+        case '!discord':
+            client.say(TARGET_CHANNEL, `@${tags.username} https://discord.gg/RA5GuG2k6A`);
+            break;
+        case '!rules':
+            client.say(TARGET_CHANNEL, `@${tags.username} https://pastebin.com/pivfNuNa`);
+            break;
+        case '!runs':
+            client.say(TARGET_CHANNEL, `@${tags.username} https://pastebin.com/u/nebblebb`);
+            break;
+        case '!twitter':
+            client.say(TARGET_CHANNEL, `@${tags.username} https://twitter.com/nebblebb`);
+            break;
+        case '!vods':
+            client.say(TARGET_CHANNEL, `@${tags.username} https://www.youtube.com/@nebblebbvods`);
+            break;
+        case '!yt':
+            client.say(TARGET_CHANNEL, `@${tags.username} https://www.youtube.com/@nebblebb1`);
+            break;
+        case '!bot':
+            client.say(TARGET_CHANNEL, `@${tags.username} https://github.com/IceDBorn/BlebbBot`);
+            break;
     }
 }
 
