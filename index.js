@@ -70,7 +70,7 @@ function onMessageHandler(tags, message, self){
 
     // Respond to commands
     if (message.trim() === '!commands') {
-        client.say(CHANNEL, `@${tags.username} !twitter !discord !yt !vods !rules !runs`);
+        client.say(CHANNEL, `@${tags.username} !twitter !discord !yt !vods !rules !runs !bot`);
     } else if (message.trim() === '!discord') {
         client.say(CHANNEL, `@${tags.username} https://discord.gg/RA5GuG2k6A`);
     } else if (message.trim() === '!rules') {
@@ -83,6 +83,8 @@ function onMessageHandler(tags, message, self){
         client.say(CHANNEL, `@${tags.username} https://www.youtube.com/@nebblebbvods`);
     } else if (message.trim() === '!yt') {
         client.say(CHANNEL, `@${tags.username} https://www.youtube.com/@nebblebb1`);
+    } else if (message.trim() === '!bot') {
+        client.say(CHANNEL, `@${tags.username} https://github.com/IceDBorn/BlebbBot`);
     }
 }
 
