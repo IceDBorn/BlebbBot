@@ -65,22 +65,31 @@ function onMessageHandler(target, tags, message, self){
     }
 
     // Respond to commands
-    if (message.trim() === '!commands') {
+    switch (message.trim()) {
+    case '!commands':
         client.say(TARGET_CHANNEL, `@${tags.username} !twitter !discord !yt !vods !rules !runs !bot`);
-    } else if (message.trim() === '!discord') {
+        break;
+    case '!discord':
         client.say(TARGET_CHANNEL, `@${tags.username} https://discord.gg/RA5GuG2k6A`);
-    } else if (message.trim() === '!rules') {
+        break;
+    case '!rules':
         client.say(TARGET_CHANNEL, `@${tags.username} https://pastebin.com/pivfNuNa`);
-    } else if (message.trim() === '!runs') {
+        break;
+    case '!runs':
         client.say(TARGET_CHANNEL, `@${tags.username} https://pastebin.com/u/nebblebb`);
-    } else if (message.trim() === '!twitter') {
+        break;
+    case '!twitter':
         client.say(TARGET_CHANNEL, `@${tags.username} https://twitter.com/nebblebb`);
-    } else if (message.trim() === '!vods') {
+        break;
+    case '!vods':
         client.say(TARGET_CHANNEL, `@${tags.username} https://www.youtube.com/@nebblebbvods`);
-    } else if (message.trim() === '!yt') {
+        break;
+    case '!yt':
         client.say(TARGET_CHANNEL, `@${tags.username} https://www.youtube.com/@nebblebb1`);
-    } else if (message.trim() === '!bot') {
+        break;
+    case '!bot':
         client.say(TARGET_CHANNEL, `@${tags.username} https://github.com/IceDBorn/BlebbBot`);
+        break;
     }
 }
 
