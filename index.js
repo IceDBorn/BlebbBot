@@ -2,8 +2,8 @@ const TMI = require('tmi.js'); // Npm package for communicating with Twitch
 
 const BOT_NAME = 'BlebbBot';
 const TMI_OAUTH = ''; // Get the auth token from https://twitchapps.com/tmi/
-const CHANNEL = 'nebblebb'; // Twitch channel to send messages to
-const TEN_MINUTES = 600000;
+const TARGET_CHANNEL = 'nebblebb'; // Twitch channel to send messages to
+const MESSAGES_INTERVAL = 600000; // Interval to send promotional messages in milliseconds
 const MESSAGES = [
     "Thank you for watching! If you'd like stay up to date with the channel, consider following me on Twitter: https://twitter.com/nebblebb",
     "If you'd like to vote in polls, hang out with me or other members of our little community and be notified whenever I go live, feel free to join our Discord server: https://discord.gg/RA5GuG2k6A",
@@ -16,7 +16,7 @@ const TMI_OPTIONS = {
         password: TMI_OAUTH
     },
     channels: [
-        CHANNEL
+        TARGET_CHANNEL
     ]
 }
 
@@ -24,20 +24,19 @@ const TMI_OPTIONS = {
 const client = new TMI.client(TMI_OPTIONS);
 
 let messagesCounter = 0;
-let selfCounter = 0;
-let desiredMessagesNumber = false;
 let messageNumber = 0;
+let desiredMessagesNumber = 5;
 
 // Register listeners and connect to the chat
 client.on('connected', onConnectedHandler);
 client.on('message', onMessageHandler);
 client.connect();
 
-// Send a promotional message if there were 5 messages written in the chat in the last 10 minutes
+// Send a promotional message if the desired number of messages were written in the chat within the messages interval
 setInterval(() => {
-    if (messagesCounter === 5) {
-        client.say(CHANNEL, MESSAGES[messageNumber]).then(() => {
-            console.log(`Sent promotional message number ${messageNumber + 1}`);
+    if (messagesCounter === desiredMessagesNumber) {
+        client.say(TARGET_CHANNEL, MESSAGES[messageNumber]).then(() => {
+            console.log(`Promotional message number ${messageNumber + 1} sent`);
             clearMessagesCounter();
             if (messageNumber === 2) {
                 messageNumber = 0;
@@ -48,47 +47,43 @@ setInterval(() => {
         });
     } else {
         clearMessagesCounter();
+        console.log('The desired number of messages was not written in the chat...');
     }
-}, TEN_MINUTES);
+}, MESSAGES_INTERVAL);
 
 function onConnectedHandler () {
-    console.log(`Successfully connected to ${CHANNEL}`);
+    console.log(`Successfully connected to ${TARGET_CHANNEL}!`);
 }
 
 // Manage new messages sent in the chat
 function onMessageHandler(target, tags, message, self){
     if (self) return // Ignore messages sent by the bot
 
-    // Count messages
-    if (messagesCounter <= 4) {
+    // Count up to the desired number of messages
+    if (messagesCounter < desiredMessagesNumber) {
         messagesCounter++;
-        selfCounter++;
-    } else if (!desiredMessagesNumber) {
-        console.log('The desired number of messages was written in the chat...');
-        desiredMessagesNumber = true;
     }
 
     // Respond to commands
     if (message.trim() === '!commands') {
-        client.say(CHANNEL, `@${tags.username} !twitter !discord !yt !vods !rules !runs !bot`);
+        client.say(TARGET_CHANNEL, `@${tags.username} !twitter !discord !yt !vods !rules !runs !bot`);
     } else if (message.trim() === '!discord') {
-        client.say(CHANNEL, `@${tags.username} https://discord.gg/RA5GuG2k6A`);
+        client.say(TARGET_CHANNEL, `@${tags.username} https://discord.gg/RA5GuG2k6A`);
     } else if (message.trim() === '!rules') {
-        client.say(CHANNEL, `@${tags.username} https://pastebin.com/pivfNuNa`);
+        client.say(TARGET_CHANNEL, `@${tags.username} https://pastebin.com/pivfNuNa`);
     } else if (message.trim() === '!runs') {
-        client.say(CHANNEL, `@${tags.username} https://pastebin.com/u/nebblebb`);
+        client.say(TARGET_CHANNEL, `@${tags.username} https://pastebin.com/u/nebblebb`);
     } else if (message.trim() === '!twitter') {
-        client.say(CHANNEL, `@${tags.username} https://twitter.com/nebblebb`);
+        client.say(TARGET_CHANNEL, `@${tags.username} https://twitter.com/nebblebb`);
     } else if (message.trim() === '!vods') {
-        client.say(CHANNEL, `@${tags.username} https://www.youtube.com/@nebblebbvods`);
+        client.say(TARGET_CHANNEL, `@${tags.username} https://www.youtube.com/@nebblebbvods`);
     } else if (message.trim() === '!yt') {
-        client.say(CHANNEL, `@${tags.username} https://www.youtube.com/@nebblebb1`);
+        client.say(TARGET_CHANNEL, `@${tags.username} https://www.youtube.com/@nebblebb1`);
     } else if (message.trim() === '!bot') {
-        client.say(CHANNEL, `@${tags.username} https://github.com/IceDBorn/BlebbBot`);
+        client.say(TARGET_CHANNEL, `@${tags.username} https://github.com/IceDBorn/BlebbBot`);
     }
 }
 
 function clearMessagesCounter() {
     messagesCounter = 0;
-    desiredMessagesNumber = false;
 }
