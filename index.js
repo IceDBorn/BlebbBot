@@ -56,7 +56,7 @@ function onConnectedHandler () {
 }
 
 // Manage new messages sent in the chat
-function onMessageHandler(tags, message, self){
+function onMessageHandler(target, tags, message, self){
     if (self) return // Ignore messages sent by the bot
 
     // Count messages
