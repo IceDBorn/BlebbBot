@@ -1,0 +1,14 @@
+{
+  "name": "blebbbot",
+  "version": "0.0.1",
+  "description": "A twitch chat bot for nebblebb",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "IceDBorn",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "tmi.js": "^1.8.5"
+  }
+}
