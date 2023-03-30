@@ -4,6 +4,7 @@ const BOT_NAME = 'BlebbBot';
 const TMI_OAUTH = ''; // Get the auth token from https://twitchapps.com/tmi/
 const TARGET_CHANNEL = 'nebblebb'; // Twitch channel to send messages to
 const MESSAGES_INTERVAL = 600000; // Interval to send promotional messages in milliseconds
+const DESIRED_MESSAGES_NUMBER = 5;
 const MESSAGES = [
     "Thank you for watching! If you'd like stay up to date with the channel, consider following me on Twitter: https://twitter.com/nebblebb",
     "If you'd like to vote in polls, hang out with me or other members of our little community and be notified whenever I go live, feel free to join our Discord server: https://discord.gg/RA5GuG2k6A",
@@ -25,7 +26,6 @@ const client = new TMI.client(TMI_OPTIONS);
 
 let messagesCounter = 0;
 let messageNumber = 0;
-let desiredMessagesNumber = 5;
 
 // Register listeners and connect to the chat
 client.on('connected', onConnectedHandler);
@@ -34,11 +34,11 @@ client.connect();
 
 // Send a promotional message if the desired number of messages were written in the chat within the messages interval
 setInterval(() => {
-    if (messagesCounter === desiredMessagesNumber) {
+    if (messagesCounter === DESIRED_MESSAGES_NUMBER) {
         client.say(TARGET_CHANNEL, MESSAGES[messageNumber]).then(() => {
             console.log(`Promotional message number ${messageNumber + 1} sent`);
             clearMessagesCounter();
-            if (messageNumber === 2) {
+            if (messageNumber === (MESSAGES.length - 1)) {
                 messageNumber = 0;
                 console.log('Resetting promotional messages...');
             } else {
@@ -60,7 +60,7 @@ function onMessageHandler(target, tags, message, self){
     if (self) return // Ignore messages sent by the bot
 
     // Count up to the desired number of messages
-    if (messagesCounter < desiredMessagesNumber) {
+    if (messagesCounter < DESIRED_MESSAGES_NUMBER) {
         messagesCounter++;
     }
 
